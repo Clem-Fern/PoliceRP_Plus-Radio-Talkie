@@ -1,0 +1,12 @@
+{
+	"title"		:	"PSRP Utils",
+	"type"		:	"weapon",
+	"tags"		:	[ "roleplay"],
+	"ignore"	:
+	[
+		".git/**",
+		".gitignore",
+        "LICENSE",
+        "README.md"
+	]
+}
