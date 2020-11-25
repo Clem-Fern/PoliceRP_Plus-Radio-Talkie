@@ -1,4 +1,4 @@
-AddCSLuaFile("shared.lua")
+AddCSLuaFile()
 
 SWEP.Base = "weapon_base_grenade"
 
@@ -10,9 +10,9 @@ SWEP.EquipMenuData = {
 	desc = "Flashbang"
 };
 
-SWEP.Category = "PSRP Utils"
+SWEP.Category = "PoliceRP Plus"
 
-SWEP.Grenade = "psrpu_flashbang_proj"
+SWEP.Grenade = "ent_flashbang_proj"
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
@@ -27,5 +27,5 @@ SWEP.DrawCrosshair		= false
 SWEP.LimitedStock = false
 
 function SWEP:GetGrenadeName()
-   return "psrpu_flashbang_proj"
+   return "ent_flashbang_proj"
 end
