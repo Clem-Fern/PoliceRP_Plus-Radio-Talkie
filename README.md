@@ -1,8 +1,10 @@
 # PoliceRp_Plus
-Grenade (based on ttt) :
+
+### Grenade (based on ttt) :
 - flash grenade
 - smoke grenade
-Talkie :
+
+### Talkie :
 - PTT
 - Sound mute
 - Channel
