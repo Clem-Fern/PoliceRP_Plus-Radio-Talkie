@@ -77,7 +77,7 @@ concommand.Add( "radio_chan", function( ply, cmd, args )
 
     if args[1] then 
         // set chan
-        setRadioChannel(radio,args[1])
+        setRadioChannel(radio,tonumber(args[1]))
     else
         nextRadioChannel(radio)
     end
