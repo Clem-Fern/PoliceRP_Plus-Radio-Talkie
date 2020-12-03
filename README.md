@@ -1,6 +1,6 @@
 # PoliceRp_Plus
 
-Version : 1.1.0
+Version : 1.1.1
 
 ### Grenade (based on ttt) :
 - flash grenade
