@@ -1,11 +1,12 @@
 AddCSLuaFile()
+include("autorun/megaphone.lua")
 
-SWEP.PrintName = "Radio"
+SWEP.PrintName = "Megaphone"
 SWEP.SlotPos = 2
 
 SWEP.EquipMenuData = {
 	type = "item_weapon",
-	desc = "Radio"
+	desc = "Megaphone"
 };
 
 SWEP.Category = "PoliceRP Plus"
@@ -16,10 +17,14 @@ SWEP.AdminSpawnable = true
 SWEP.DrawCrosshair	= false
 SWEP.DrawAmmo = false
 
-function SWEP:SetupDataTables()
-    self:NetworkVar("Bool", 0, "SoundMuted")
-    self:NetworkVar("Bool", 1, "Mic")
-    self:NetworkVar("Int", 0, "Chan")
+/////////////////////////////////////////////////////////////
+// HUD
+if(CLIENT) then 
+	function SWEP:DrawHUD() 
+		local count = megaphone.count(LocalPlayer())
+		local W,H=ScrW(),ScrH()
+		draw.SimpleTextOutlined("Joueur(s) à portée : "..tostring(count),"Trebuchet24",W*.76,H*.87,Color(255,255,255,255),TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER,1,Color(0,0,0,255))
+	end
 end
 
 //////////////////////////////////////////////////////////////
@@ -31,9 +36,7 @@ SWEP.Primary.Delay = 0.7
 SWEP.Primary.Ammo		= "none"
 
 function SWEP:PrimaryAttack()
-    if(SERVER) then
-        self:GetOwner():ConCommand("radio_toogle_mic")
-    end
+    //
 end
 
 //////////////////////////////////////////////////////////////
@@ -45,55 +48,46 @@ SWEP.Secondary.Delay = 0.7
 SWEP.Secondary.Ammo		= "none"
 
 function SWEP:SecondaryAttack()
-    if(SERVER) then
-        self:GetOwner():ConCommand("radio_toogle_sound")
-    end
+    //
 end
 
 /////////////////////////////////////////////////////////////
 // Reload
 function SWEP:Reload()
-    if(SERVER) then
-        if self.ReloadingTime and CurTime() <= self.ReloadingTime then return end
-
-        self.ReloadingTime = CurTime() + 0.5
-        self:SetNextPrimaryFire(CurTime() + 0.1)
-        self:SetNextSecondaryFire(CurTime() + 0.1)
-
-        self:GetOwner():ConCommand("radio_chan")
-    end
-end
-
-/////////////////////////////////////////////////////////////
-// Equip
-function SWEP:Equip(ply)
-    // resrt NW radio fields
-    self:SetSoundMuted(false)
-    self:SetMic(false)
-    self:SetChan(0)
+    //
 end
 
 /////////////////////////////////////////////////////////////
 // rendu model
-SWEP.HoldType = "normal"
-SWEP.ViewModelFOV = 93.869346733668
-SWEP.ViewModelFlip = true
+SWEP.HoldType = "revolver"
+SWEP.ViewModelFOV = 90
+SWEP.ViewModelFlip = false
 SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
-SWEP.WorldModel = "models/radio/w_radio.mdl"
+SWEP.WorldModel = "models/ptejack/props/megaphone/megaphone.mdl"
 SWEP.ShowViewModel = true
-SWEP.ShowWorldModel = true
+SWEP.ShowWorldModel = false
 SWEP.ViewModelBoneMods = {
-	["ValveBiped.Bip01_R_Clavicle"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(-30, -30, -30), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, -11.667, -11.296), angle = Angle(-54.445, 0, 0) },
-	["ValveBiped.Bip01_L_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, -0.186), angle = Angle(-3.333, 0, 0) },
-	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(-30, 30, -30), angle = Angle(-76.667, 0, 0) },
-	["ValveBiped.Bip01_L_Clavicle"] = { scale = Vector(1, 1, 1), pos = Vector(-19.445, 30, 30), angle = Angle(-123.334, 0, 0) },
-	["ValveBiped.Bip01_L_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(18.888, 0, 0) }
+	["ValveBiped.Bip01_R_Finger11"] = { scale = Vector(1, 1, 1), pos = Vector(0, 1.296, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_L_Clavicle"] = { scale = Vector(1, 1, 1), pos = Vector(30, -30, 30), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_R_Finger2"] = { scale = Vector(1, 1, 1), pos = Vector(-0.556, 2.036, -0.186), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(30, 0, -30), angle = Angle(-96.667, 0, 0) },
+	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(-1.111, 0, 0) },
+	["ValveBiped.Bip01_R_Finger1"] = { scale = Vector(1, 1, 1), pos = Vector(0, 1.667, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_R_Finger4"] = { scale = Vector(1, 1, 1), pos = Vector(-0.186, 1.296, 0), angle = Angle(-10, 0, 0) },
+	["ValveBiped.Bip01_R_Finger3"] = { scale = Vector(1, 1, 1), pos = Vector(-0.556, 1.667, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_R_Forearm"] = { scale = Vector(1, 1, 1), pos = Vector(1.667, 1.296, -2.037), angle = Angle(-58.889, 0, 0) },
+	["ValveBiped.Bip01_R_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(18.333, 12.406, 15.741), angle = Angle(-127.778, 0, 0) },
+	["ValveBiped.Bip01_R_Clavicle"] = { scale = Vector(1, 1, 1), pos = Vector(-22.407, 3.888, 30), angle = Angle(-92.223, 0, 0) },
+	["ValveBiped.Bip01_R_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(-3.333, 0, 0) }
 }
 
 SWEP.VElements = {
-	["radio"] = { type = "Model", model = "models/radio/c_radio.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-15.344, -10.242, 13.645), angle = Angle(-19.871, 5.843, 12.857), size = Vector(1.47, 1.47, 1.47), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["models/ptejack/props/megaphone/megaphone.mdl"] = { type = "Model", model = "models/ptejack/props/megaphone/megaphone.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.675, 0.518, -4.676), angle = Angle(0, 45.583, -180), size = Vector(1.08, 1.08, 1.08), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElements = {
+	["models/ptejack/props/megaphone/megaphone.mdl"] = { type = "Model", model = "models/ptejack/props/megaphone/megaphone.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 1.557, -3.636), angle = Angle(0, 0, -180), size = Vector(0.755, 0.755, 0.755), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 /********************************************************

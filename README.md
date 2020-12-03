@@ -10,3 +10,7 @@ Version : 1.0.1
 - PTT
 - Sound mute
 - Channel
+
+### Megaphone :
+- voice amplifier (20m)
+- in view field
