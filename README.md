@@ -1,15 +1,15 @@
 # PoliceRp_Plus
 
-Version : 1.0.1
+Version : 1.1.0
 
 ### Grenade (based on ttt) :
 - flash grenade
 - smoke grenade
 
 ### Talkie :
-- PTT
-- Sound mute
-- Channel
+- PTT (radio_toogle_mic)
+- Sound mute (radio_toogle_sound)
+- Channel (radio_chan)
 
 ### Megaphone :
 - voice amplifier (20m)
