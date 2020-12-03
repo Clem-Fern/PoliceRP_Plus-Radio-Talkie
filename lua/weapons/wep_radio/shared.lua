@@ -46,7 +46,7 @@ SWEP.Secondary.Ammo		= "none"
 
 function SWEP:SecondaryAttack()
     if(SERVER) then
-        self:GetOwner():ConCommand("radio_toogle_power")
+        self:GetOwner():ConCommand("radio_toogle_sound")
     end
 end
 

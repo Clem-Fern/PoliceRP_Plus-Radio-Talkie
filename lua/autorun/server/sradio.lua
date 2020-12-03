@@ -25,7 +25,7 @@ concommand.Add( "radio_toogle_mic", function( ply, cmd, args )
     if(!plyHasRadio(ply)) then return end
     radio = ply:GetWeapon("wep_radio")
 
-    if(!radio:GetPower()) then return; end
+    if(radio:GetSoundMuted()) then return; end
 
     if(radio:GetMic()) then
         // set radio mic off
@@ -37,34 +37,21 @@ concommand.Add( "radio_toogle_mic", function( ply, cmd, args )
 
 end)
 
-// radio_cut_off_mic
-concommand.Add( "radio_cut_off_mic", function( ply, cmd, args )
+// radio_toogle_sound
+concommand.Add( "radio_toogle_sound", function( ply, cmd, args )
     if(!plyHasRadio(ply)) then return end
     radio = ply:GetWeapon("wep_radio")
 
-    if(!radio:GetPower()) then return; end
-
-    radio:SetMic(false)
-
-end)
-
-// radio_toogle_power
-concommand.Add( "radio_toogle_power", function( ply, cmd, args )
-    if(!plyHasRadio(ply)) then return end
-    radio = ply:GetWeapon("wep_radio")
-
-    if(radio:GetPower()) then
-        // set radio off
-        radio:SetPower(false)
-        // set mic off
-        radio:SetMic(false)
-        
-        ply:EmitSound("radio/r_radiotone.wav", 40, 100, 1, CHAN_WEAPON)
-    else
-        // set radio on
-        radio:SetPower(true)
+    if(radio:GetSoundMuted()) then
+        // set radio sound unmuted
+        radio:SetSoundMuted(false)
         
         ply:EmitSound("radio/radiotone.wav", 40, 100, 1, CHAN_WEAPON)
+    else
+        // set radio sound muted
+        radio:SetSoundMuted(true)
+        
+        ply:EmitSound("radio/r_radiotone.wav", 40, 100, 1, CHAN_WEAPON)
     end
 
 end)
@@ -73,8 +60,6 @@ end)
 concommand.Add( "radio_chan", function( ply, cmd, args )
     if(!plyHasRadio(ply)) then return end
     radio = ply:GetWeapon("wep_radio")
-
-    if(!radio:GetPower()) then return; end
 
     if args[1] then 
         // set chan
@@ -105,13 +90,11 @@ end
 
 // Voice Hook
 hook.Add("PlayerCanHearPlayersVoice","PoliceRPPlusRadioVoice",function(listener,speaker)
-    local S_hasRadio, S_powerState, S_micState, S_chan = getRadioInfo(speaker);
-    if((S_hasRadio) and (S_powerState) and (S_micState)) then
-        local L_hasRadio, L_powerState, L_micState, L_chan = getRadioInfo(listener);
-        if((L_hasRadio) and (L_powerState) and (S_chan == L_chan)) then
+    local S_hasRadio, S_soundMuted, S_micState, S_chan = getRadioInfo(speaker);
+    if((S_hasRadio) and (!S_soundMuted) and (S_micState)) then
+        local L_hasRadio, L_soundMuted, L_micState, L_chan = getRadioInfo(listener);
+        if((L_hasRadio) and (!L_soundMuted) and (S_chan == L_chan)) then
             return true
-        else
-            return false
         end
     end
 end);
@@ -120,10 +103,10 @@ function getRadioInfo(ply)
     local hasRadio = ply:HasWeapon("wep_radio")
     if(hasRadio) then
         radio = ply:GetWeapon("wep_radio")
-        local powerState = radio:GetPower()
+        local soundMuted = radio:GetSoundMuted()
         local micState = radio:GetMic()
         local chan = radio:GetChan()
-        return hasRadio, powerState, micState, chan
+        return hasRadio, soundMuted, micState, chan
     end
     return hasRadio, false, false, 0
 end
