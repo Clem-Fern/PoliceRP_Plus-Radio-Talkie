@@ -17,7 +17,7 @@ SWEP.DrawCrosshair	= false
 SWEP.DrawAmmo = false
 
 function SWEP:SetupDataTables()
-    self:NetworkVar("Bool", 0, "Power")
+    self:NetworkVar("Bool", 0, "SoundMuted")
     self:NetworkVar("Bool", 1, "Mic")
     self:NetworkVar("Int", 0, "Chan")
 end
@@ -68,7 +68,7 @@ end
 // Equip
 function SWEP:Equip(ply)
     // resrt NW radio fields
-    self:SetPower(false)
+    self:SetSoundMuted(false)
     self:SetMic(false)
     self:SetChan(0)
 end
