@@ -8,6 +8,7 @@ resource.AddFile( "sound/radio/r_radiotone.wav" )
 resource.AddFile( "sound/radio/radiorogerbeep.wav" )
 
 // radio hud
+resource.AddFile( "materials/radio/hud/sound_mute.png" )
 resource.AddFile( "materials/radio/hud/mute.png" )
 resource.AddFile( "materials/radio/hud/unmute.png" )
 
