@@ -1,5 +1,4 @@
 AddCSLuaFile()
-AddCSLuaFile("autorun/client/radio.lua")
 
 // radio sound
 resource.AddFile( "sound/radio/radioswitch.wav" )
